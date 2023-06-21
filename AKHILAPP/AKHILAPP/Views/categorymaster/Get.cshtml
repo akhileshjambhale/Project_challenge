@@ -1,0 +1,72 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<AKHILAPP.Models.Category_Master>
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .pagination {
+        margin-top: 16px;
+    }
+
+        .pagination a {
+            display: inline-block;
+            padding: 8px;
+            text-decoration: none;
+            background-color: #f2f2f2;
+            color: #333;
+            border-radius: 4px;
+        }
+
+            .pagination a.active {
+                background-color: #007bff;
+                color: #fff;
+            }
+</style>
+
+<table>
+    <tr>
+        <th>CatMaster_Id</th>
+        <th>Cat_Name</th>
+    </tr>
+    @foreach (var category in Model)
+    {
+        <tr>
+            <td>@category.CatMaster_Id</td>
+            <td>@category.Cat_Name</td>
+        </tr>
+    }
+</table>
+
+@{
+    int currentPage = ViewBag.CurrentPage;
+    int totalPages = ViewBag.TotalPages;
+}
+
+@if (totalPages > 1)
+{
+    <div class="pagination">
+        Page:
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <a href="@Url.Action("Get", "CategoryMaster", new { page = i })" class="@(i == currentPage ? "active" : "")">@i</a>
+
+        }
+    </div>
+}

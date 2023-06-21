@@ -1,0 +1,25 @@
+﻿@model List<AKHILAPP.Models.Category_Master>
+
+<h2>Update Category</h2>
+
+<table class="table">
+    <tr>
+        <th>CatMaster_Id</th>
+        <th>Cat_Name</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var category in Model)
+    {
+        <tr>
+            <td>@category.CatMaster_Id</td>
+            <td>@category.Cat_Name</td>
+            <td>
+                <form asp-action="Update" asp-controller="CategoryMaster" method="post">
+                    <input type="hidden" name="id" value="@category.CatMaster_Id" />
+                    <input type="text" name="categoryName" value="@category.Cat_Name" />
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>

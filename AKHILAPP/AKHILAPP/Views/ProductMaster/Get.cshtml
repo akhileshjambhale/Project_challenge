@@ -1,0 +1,70 @@
+﻿@model List<AKHILAPP.Models.Product_Master>
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .pagination {
+        margin-top: 16px;
+    }
+
+        .pagination a {
+            display: inline-block;
+            padding: 8px;
+            text-decoration: none;
+            background-color: #f2f2f2;
+            color: #333;
+            border-radius: 4px;
+        }
+
+            .pagination a.active {
+                background-color: #007bff;
+                color: #fff;
+            }
+</style>
+
+<table>
+    <tr>
+        <th>ProdMaster_Id</th>
+        <th>Prod_Name</th>
+        <th>Catmaster_Id</th>
+        <th>Category Name</th>
+    </tr>
+    @foreach (var product in Model)
+    {
+        <tr>
+            <td>@product.ProdMaster_Id</td>
+            <td>@product.Prod_Name</td>
+            <td>@product.Catmaster_Id</td>
+            <td>@(product.Category_Master != null ? product.Category_Master.Cat_Name : "")</td>
+        </tr>
+    }
+</table>
+
+@{
+    int currentPage = ViewBag.CurrentPage;
+    int totalPages = ViewBag.TotalPages;
+}
+
+@if (totalPages > 1)
+{
+    <div class="pagination">
+        Page:
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <a href="@Url.Action("Get", "ProductMaster", new { page = i })" class="@(i == currentPage ? "active" : "")">@i</a>
+        }
+    </div>
+}

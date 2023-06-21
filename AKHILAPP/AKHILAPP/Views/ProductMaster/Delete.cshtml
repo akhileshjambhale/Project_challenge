@@ -1,0 +1,85 @@
+﻿@model AKHILAPP.Models.Product_Master
+
+<style>
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+        .table th,
+        .table td {
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .table tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        font-size: 14px;
+        border-radius: 3px;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+</style>
+
+<h2>Delete Product</h2>
+
+@if (!string.IsNullOrEmpty(TempData["DeleteMessage"] as string))
+{
+    <div class="alert alert-success">
+        @TempData["DeleteMessage"]
+    </div>
+}
+
+<p>Are you sure you want to delete the following product?</p>
+
+<table class="table">
+    <tr>
+        <th>ProdMaster_Id</th>
+        <th>Prod_Name</th>
+        <th>Catmaster_Id</th>
+        <th>Category Name</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var product in ViewBag.Products)
+    {
+        <tr>
+            <td>@product.ProdMaster_Id</td>
+            <td>@product.Prod_Name</td>
+            <td>@product.Catmaster_Id</td>
+            <td>@(product.Category_Master != null ? product.Category_Master.Cat_Name : "")</td>
+            <td>
+                <form id="deleteForm-@product.ProdMaster_Id" action="DeleteConfirmed" method="post">
+                    <input type="hidden" name="id" value="@product.ProdMaster_Id" />
+                    <button type="button" class="btn btn-danger" onclick="showConfirmation(@product.ProdMaster_Id)">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+<script>
+    function showConfirmation(productId) {
+        if (confirm("Are you sure you want to delete this product?")) {
+            // Proceed with form submission
+            document.getElementById("deleteForm-" + productId).submit();
+        }
+    }
+</script>

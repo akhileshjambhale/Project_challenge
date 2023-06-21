@@ -1,0 +1,81 @@
+﻿@model AKHILAPP.Models.Category_Master
+
+<style>
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+        .table th,
+        .table td {
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .table tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        font-size: 14px;
+        border-radius: 3px;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+</style>
+
+<h2>Delete Category</h2>
+
+@if (!string.IsNullOrEmpty(TempData["DeleteMessage"] as string))
+{
+        <div class="alert alert-success">
+        @TempData["DeleteMessage"]
+        </div>
+}
+
+<p>Are you sure you want to delete the following category?</p>
+
+<table class="table">
+    <tr>
+        <th>CatMaster_Id</th>
+        <th>Cat_Name</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var category in ViewBag.Categories)
+    {
+            <tr>
+                <td>@category.CatMaster_Id</td>
+                <td>@category.Cat_Name</td>
+                <td>
+                    <form id="deleteForm-@category.CatMaster_Id" action="DeleteConfirmed" method="post">
+                        <input type="hidden" name="id" value="@category.CatMaster_Id" />
+                        <button type="button" class="btn btn-danger" onclick="showConfirmation(@category.CatMaster_Id)">Delete</button>
+                    </form>
+                </td>
+            </tr>
+    }
+</table>
+
+<script>
+    function showConfirmation(categoryId) {
+        if (confirm("Are you sure you want to delete this category?")) {
+            // Proceed with form submission
+            document.getElementById("deleteForm-" + categoryId).submit();
+        }
+    }
+</script>
